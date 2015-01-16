@@ -86,7 +86,7 @@ namespace DatabaseDeploy.Test.ScriptGeneration
                 new TokenReplacer(new ConfigurationService()),
                 configurationService.Object);
 
-            string result = scriptService.BuildChangeScript(changes);
+            string result = scriptService.BuildChangeScript(changes, 0);
 
             TimeProvider.ResetToDefault();
             EnvironmentProvider.ResetToDefault();

@@ -72,7 +72,7 @@ namespace DatabaseDeploy.Test
                 .Verifiable();
 
             // Script Service Setup
-            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
+            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 5))
                 .Returns(changeScript)
                 .Verifiable();
             scriptServiceMock.Setup(script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
@@ -118,7 +118,7 @@ namespace DatabaseDeploy.Test
 
             // Script Service Verifies
             scriptServiceMock.Verify(
-                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
+                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 5),
                 Times.Exactly(1));
             scriptServiceMock.Verify(
                 script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
@@ -169,8 +169,8 @@ namespace DatabaseDeploy.Test
 
             // Script Service Setup
             int passedCount = 0;
-            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
-                .Callback<IDictionary<decimal, IScriptFile>>(files => passedCount = files.Count)
+            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 5))
+                .Callback<IDictionary<decimal, IScriptFile>, decimal>((files, currentDbVersion) => passedCount = files.Count)
                 .Returns(changeScript)
                 .Verifiable();
             scriptServiceMock.Setup(script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
@@ -214,7 +214,7 @@ namespace DatabaseDeploy.Test
 
             // Script Service Verifies
             scriptServiceMock.Verify(
-                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
+                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 5),
                 Times.Exactly(1));
             scriptServiceMock.Verify(
                 script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
@@ -264,7 +264,7 @@ namespace DatabaseDeploy.Test
                 .Verifiable();
 
             // Script Service Setup
-            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
+            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 0))
                 .Returns(changeScript)
                 .Verifiable();
             scriptServiceMock.Setup(script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
@@ -307,7 +307,7 @@ namespace DatabaseDeploy.Test
 
             // Script Service Verifies
             scriptServiceMock.Verify(
-                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
+                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 0),
                 Times.Never());
             scriptServiceMock.Verify(
                 script => script.BuildUndoScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
@@ -356,7 +356,7 @@ namespace DatabaseDeploy.Test
                 .Verifiable();
 
             // Script Service Setup
-            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()))
+            scriptServiceMock.Setup(script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 0))
                 .Returns(changeScript)
                 .Verifiable();
 
@@ -394,7 +394,7 @@ namespace DatabaseDeploy.Test
 
             // Script Service Verifies
             scriptServiceMock.Verify(
-                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>()),
+                script => script.BuildChangeScript(It.IsAny<IDictionary<decimal, IScriptFile>>(), 0),
                 Times.Never());
         }
 

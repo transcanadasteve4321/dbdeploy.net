@@ -70,14 +70,15 @@ namespace DatabaseDeploy.Core.ScriptGeneration
         ///     The build change script.
         /// </summary>
         /// <param name="changes">The changes.</param>
+        /// <param name="currentDbVersion"></param>
         /// <returns>A string containing the contents of the provided change files</returns>
-        public string BuildChangeScript(IDictionary<decimal, IScriptFile> changes)
+        public string BuildChangeScript(IDictionary<decimal, IScriptFile> changes, decimal currentDbVersion)
         {
             StringBuilder changeScript = new StringBuilder();
 
             this.undoToken = this.configurationService.DatabaseService.GetScriptFromFile(DatabaseScriptEnum.UndoToken);
 
-            this.tokenReplacer.CurrentVersion = changes.Keys.Min() - 1;
+            this.tokenReplacer.CurrentVersion = currentDbVersion;
 
             this.AppendScript(DatabaseScriptEnum.ChangeScriptHeader, changeScript);
 

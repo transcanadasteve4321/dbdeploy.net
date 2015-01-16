@@ -101,6 +101,9 @@ namespace DatabaseDeploy.Core
 
                 Log.InfoIfEnabled("Getting applied changes.");
                 IDictionary<decimal, IChangeLog> changes = this.configurationService.DatabaseService.GetAppliedChanges();
+
+                decimal currentDbVersion = changes.Keys.Max();
+
                 Log.InfoIfEnabled("Found scripts {0}.", this.scriptMessageFormatter.FormatCollection(changes.Keys));
 
                 Log.InfoIfEnabled("Getting scripts to apply.");
@@ -111,7 +114,7 @@ namespace DatabaseDeploy.Core
                     Log.InfoIfEnabled("Scripts {0} need to be applied.", this.scriptMessageFormatter.FormatCollection(scriptsToApply.Keys));
 
                     Log.InfoIfEnabled("Building change script.");
-                    string changeScript = this.scriptService.BuildChangeScript(scriptsToApply);
+                    string changeScript = this.scriptService.BuildChangeScript(scriptsToApply, currentDbVersion);
 
                     Log.InfoIfEnabled("Building undo script for scripts {0}.", this.scriptMessageFormatter.FormatCollection(changes.Keys));
 

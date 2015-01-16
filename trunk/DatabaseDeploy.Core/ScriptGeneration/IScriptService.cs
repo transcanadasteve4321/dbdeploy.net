@@ -19,8 +19,9 @@ namespace DatabaseDeploy.Core.ScriptGeneration
         ///     Builds a change script from the given configuration.
         /// </summary>
         /// <param name="changes">The changes that are to be included.</param>
+        /// <param name="currentDbVersion"></param>
         /// <returns>A string containing the script to be run.</returns>
-        string BuildChangeScript(IDictionary<decimal, IScriptFile> changes);
+        string BuildChangeScript(IDictionary<decimal, IScriptFile> changes, decimal currentDbVersion);
 
         /// <summary>
         ///     Builds an undo script from the changes given. This is not currently used.
