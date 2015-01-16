@@ -102,7 +102,9 @@ namespace DatabaseDeploy.Core
                 Log.InfoIfEnabled("Getting applied changes.");
                 IDictionary<decimal, IChangeLog> changes = this.configurationService.DatabaseService.GetAppliedChanges();
 
-                decimal currentDbVersion = changes.Keys.Max();
+                decimal currentDbVersion = 0;
+                if (changes.Count != 0)
+                    currentDbVersion = changes.Keys.Max();
 
                 Log.InfoIfEnabled("Found scripts {0}.", this.scriptMessageFormatter.FormatCollection(changes.Keys));
 
