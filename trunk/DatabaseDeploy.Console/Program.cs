@@ -73,6 +73,8 @@ namespace DatabaseDeploy.Console
         /// <exception cref="System.ArgumentException"></exception>
         private static void Main(string[] args)
         {
+            var exitCode = 0;
+
             try
             {
                 ConfigurationService = Container.UnityContainer.Resolve<IConfigurationService>();
@@ -116,8 +118,10 @@ namespace DatabaseDeploy.Console
             }
             catch (Exception ex)
             {
+                exitCode = 1;
                 Log.Error(ex);
             }
+            Environment.Exit(exitCode);
         }
 
         /// <summary>
