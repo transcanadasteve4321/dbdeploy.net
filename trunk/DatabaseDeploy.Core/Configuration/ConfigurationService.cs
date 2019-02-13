@@ -378,7 +378,7 @@ namespace DatabaseDeploy.Core.Configuration
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine(string.Format("ConnectionString: {0}", this.ConnectionString));
+            builder.AppendLine(string.Format("ConnectionString: {0}", this.CensoredConnectionString()));
             builder.AppendLine(string.Format("DatabaseManagementSystem: {0}", this.DatabaseManagementSystem));
             builder.AppendLine(string.Format("LastChangeToApply: {0}", this.LastChangeToApply));
             builder.AppendLine(string.Format("OutputFile: {0}", this.OutputFile));
@@ -393,6 +393,11 @@ namespace DatabaseDeploy.Core.Configuration
             string result = builder.ToString();
 
             return result;
+        }
+
+        private string CensoredConnectionString()
+        {
+            return this.ConnectionString.ToLower().Contains("password") ? "********************" : this.ConnectionString;
         }
 
         /////// <summary>

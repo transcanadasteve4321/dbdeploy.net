@@ -175,10 +175,31 @@ namespace DatabaseDeploy.Test.Configuration
         [TestMethod]
         public void ThatToStringReturnsSettings()
         {
-            IConfigurationService config = new ConfigurationService();
+            IConfigurationService config = ConfigurationServiceWith("Server=myServerAddress;Database=myDataBase;Trusted_Connection=True;");
             string result = config.ToString();
             Assert.AreNotEqual(result, typeof(ConfigurationService).FullName);
             Assert.AreNotEqual(result, typeof(IConfigurationService).FullName);
+        }
+
+        /// <summary>
+        /// Ensure that connection strings with passwords are not shown.
+        /// </summary>
+        [TestMethod]
+        public void ThatToStringCensorsConnectionStringsWithPasswords()
+        {
+            string connectionStringWithPassword = "Server=myServerAddress;Database=myDataBase;User Id=myUsername;Password=myPassword;";
+            IConfigurationService config = ConfigurationServiceWith(connectionStringWithPassword);
+            string result = config.ToString();
+            Assert.IsFalse(result.Contains(connectionStringWithPassword));
+            StringAssert.Contains(result, "********************");
+        }
+
+        private static ConfigurationService ConfigurationServiceWith(string connectionString)
+        {
+            return new ConfigurationService
+            {
+                ConnectionString = connectionString
+            };
         }
     }
 }
