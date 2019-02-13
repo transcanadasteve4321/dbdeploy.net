@@ -11,4 +11,3 @@ using DatabaseDeploy.Core.Utilities;
 using log4net.Config;
 
 [assembly: XmlConfigurator(ConfigFile = "log4net.config", Watch = true)]
-[assembly: LogAspect]

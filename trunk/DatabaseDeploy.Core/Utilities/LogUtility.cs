@@ -27,7 +27,6 @@ namespace DatabaseDeploy.Core.Utilities
     ///     calling
     ///     this static class over and over.
     /// </remarks>
-    [LogAspect(AttributeExclude = true)]
     [ExcludeFromCodeCoverage]
     public static class LogUtility
     {
