@@ -6,6 +6,8 @@
 //  </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Globalization;
+
 namespace DatabaseDeploy.Test.ScriptGeneration
 {
     using System;
@@ -30,6 +32,23 @@ namespace DatabaseDeploy.Test.ScriptGeneration
     [TestClass]
     public class ScriptServiceTests : TestFixtureBase
     {
+        private CultureInfo originalCulture;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            this.originalCulture = CultureInfo.CurrentCulture;
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            TimeProvider.ResetToDefault();
+            EnvironmentProvider.ResetToDefault();
+            CultureInfo.CurrentCulture = this.originalCulture;
+        }
+
         /// <summary>
         ///     Ensures that building a change script behaves as expected.
         /// </summary>
@@ -87,9 +106,6 @@ namespace DatabaseDeploy.Test.ScriptGeneration
                 configurationService.Object);
 
             string result = scriptService.BuildChangeScript(changes, 0);
-
-            TimeProvider.ResetToDefault();
-            EnvironmentProvider.ResetToDefault();
             Approvals.Verify(result);
         }
 
@@ -154,9 +170,6 @@ namespace DatabaseDeploy.Test.ScriptGeneration
                 configurationService.Object);
 
             string result = scriptService.BuildUndoScript(changes);
-
-            TimeProvider.ResetToDefault();
-            EnvironmentProvider.ResetToDefault();
             Approvals.Verify(result);
         }
 

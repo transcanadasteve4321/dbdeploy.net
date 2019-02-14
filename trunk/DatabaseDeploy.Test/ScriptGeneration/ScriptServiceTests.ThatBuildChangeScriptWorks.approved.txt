@@ -1,4 +1,4 @@
-﻿Change Script Header -- CurrentVersion = 0;Current DateTime = 9/17/2014 17:42;Current User = userName
+﻿Change Script Header -- CurrentVersion = 0;Current DateTime = 09/17/2014 17:42;Current User = userName
 Script Header -- Script Name = 1 1.sql;Script Id = 1;Script Description = 1
 
 Script Footer -- String Name = 1 1.sql;Script Id = 1
@@ -8,4 +8,4 @@ Script Footer -- String Name = 2 2.sql;Script Id = 2
 Script Header -- Script Name = 3 3.sql;Script Id = 3;Script Description = 3
 
 Script Footer -- String Name = 3 3.sql;Script Id = 3
-Change Script Footer -- Current DateTime = 9/17/2014 17:42
+Change Script Footer -- Current DateTime = 09/17/2014 17:42
