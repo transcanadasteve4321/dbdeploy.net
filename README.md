@@ -1,6 +1,6 @@
 # dbdeploy.net
 
-##TransCanada fork
+## TransCanada fork
 
 This fork contains in-house customizations that were useful for a couple of active projects in the organization.
 
