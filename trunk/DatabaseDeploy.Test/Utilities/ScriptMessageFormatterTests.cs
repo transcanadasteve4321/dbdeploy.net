@@ -6,6 +6,9 @@
 //  </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Linq;
+
 namespace DatabaseDeploy.Test.Utilities
 {
     using System.Collections.Generic;
@@ -29,7 +32,7 @@ namespace DatabaseDeploy.Test.Utilities
         {
             string expectedResult = "No scripts found.";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-            IList<int> numbers = new List<int>();
+            IList<decimal> numbers = new List<decimal>();
 
             string result = formatter.FormatCollection(numbers);
 
@@ -44,7 +47,7 @@ namespace DatabaseDeploy.Test.Utilities
         {
             string expectedResult = "1 to 10";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-            IList<int> numbers = new List<int>();
+            IList<decimal> numbers = new List<decimal>();
             numbers.Add(1);
             numbers.Add(2);
             numbers.Add(3);
@@ -65,26 +68,12 @@ namespace DatabaseDeploy.Test.Utilities
         ///     Ensures that a null collection doesn't fail but returns the expected string.
         /// </summary>
         [TestMethod]
-        public void ThatNullDecimalCollectionReturnsCorrectString()
+        public void ThatEmptyCollectionReturnsCorrectString()
         {
             string expectedResult = "No scripts found.";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
 
             string result = formatter.FormatCollection(new Collection<decimal>());
-
-            Assert.AreEqual(result, expectedResult);
-        }
-
-        /// <summary>
-        ///     Ensures that a null collection doesn't fail but returns the expected string.
-        /// </summary>
-        [TestMethod]
-        public void ThatNullIntCollectionReturnsCorrectString()
-        {
-            string expectedResult = "No scripts found.";
-            IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-
-            string result = formatter.FormatCollection(new Collection<int>());
 
             Assert.AreEqual(result, expectedResult);
         }
@@ -97,7 +86,7 @@ namespace DatabaseDeploy.Test.Utilities
         {
             string expectedResult = "1 to 4, 6 to 11";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-            IList<int> numbers = new List<int>();
+            IList<decimal> numbers = new List<decimal>();
             numbers.Add(1);
             numbers.Add(2);
             numbers.Add(3);
@@ -122,7 +111,7 @@ namespace DatabaseDeploy.Test.Utilities
         {
             string expectedResult = "1, 3, 5, 9 to 12, 20, 21, 30";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-            IList<int> numbers = new List<int>();
+            IList<decimal> numbers = new List<decimal>();
             numbers.Add(1);
             numbers.Add(3);
             numbers.Add(5);
@@ -136,7 +125,21 @@ namespace DatabaseDeploy.Test.Utilities
 
             string result = formatter.FormatCollection(numbers);
 
-            Assert.AreEqual(result, expectedResult);
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        /// <summary>
+        ///     Ensures that using decimal numbers get formatted in the way MScottReed_cp originally implemented it.
+        /// </summary>
+        [TestMethod]
+        public void ThatDecimalNumbersWorkCorrectly()
+        {
+            string expectedResult = "1.01,1.09,1.10,1.11,1.12,1.30,2.1,2.2,2.3";
+            IList<decimal> numbers = new[] { 1.01m, 1.09m, 1.10m, 1.11m, 1.12m, 1.30m, 2.1m, 2.2m, 2.3m }.ToList();
+
+            IScriptMessageFormatter formatter = new ScriptMessageFormatter();
+            string result = formatter.FormatCollection(numbers);
+            Assert.AreEqual(expectedResult, result);
         }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace DatabaseDeploy.Test.Utilities
         {
             string expectedResult = "1, 3, 5, 9 to 12, 20, 21, 30";
             IScriptMessageFormatter formatter = new ScriptMessageFormatter();
-            IList<int> numbers = new List<int>();
+            IList<decimal> numbers = new List<decimal>();
             numbers.Add(3);
             numbers.Add(11);
             numbers.Add(5);

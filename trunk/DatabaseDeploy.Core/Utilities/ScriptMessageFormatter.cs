@@ -6,6 +6,8 @@
 //  </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+
 namespace DatabaseDeploy.Core.Utilities
 {
     using System.Collections.Generic;
@@ -18,11 +20,25 @@ namespace DatabaseDeploy.Core.Utilities
     public class ScriptMessageFormatter : IScriptMessageFormatter
     {
         /// <summary>
-        ///     Formats a collection of int values int a pretty string.
+        ///     Formats a collection of values into a pretty string.
+        ///     If the values are all integers, the string will be very pretty.
+        ///     If the values have decimals, the string will be a straight concatentaion with commas.
         /// </summary>
         /// <param name="values">The values to format</param>
-        /// <returns>A string containing the pretty values (for example "1 to 5, 10 to 15, 20, 40, 60")</returns>
-        public string FormatCollection(ICollection<int> values)
+        /// <returns>A string containing the pretty values (for example "1 to 5, 10 to 15, 20, 40, 60" for integers, "1.1, 1.2, 1.7" for decimals)</returns>
+        public string FormatCollection(ICollection<decimal> values)
+        {
+            if (values == null || !values.Any())
+            {
+                return "No scripts found.";
+            }
+
+            return this.AllValuesAreIntegers(values)
+                ? this.FormatCollection(values.Select(Convert.ToInt32).ToArray())
+                : string.Join(",", values);
+        }
+
+        private string FormatCollection(ICollection<int> values)
         {
             string result;
 
@@ -64,19 +80,14 @@ namespace DatabaseDeploy.Core.Utilities
             return result;
         }
 
-        /// <summary>
-        ///     Returns the list of decimal numbers as a string
-        /// </summary>
-        /// <param name="values">The values.</param>
-        /// <returns>An object of type System.String.</returns>
-        public string FormatCollection(ICollection<decimal> values)
+        private bool AllValuesAreIntegers(ICollection<decimal> values)
         {
-            if (values == null || !values.Any())
-            {
-                return "No scripts found.";
-            }
+            return values.All(this.IsInteger);
+        }
 
-            return string.Join(",", values.Select(v => v.ToString()));
+        private bool IsInteger(decimal value)
+        {
+            return value == Math.Truncate(value);
         }
 
         /// <summary>
