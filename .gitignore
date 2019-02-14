@@ -2,4 +2,5 @@
 trunk/*/bin
 trunk/*/obj
 trunk/*.user
+trunk/*/*.user
 trunk/.vs
