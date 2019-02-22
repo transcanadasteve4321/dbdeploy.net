@@ -100,7 +100,9 @@
     <Compile Include="Configuration\ConfigurationServiceTests.cs" />
     <Compile Include="Database\BogusDatabaseMock.cs" />
     <Compile Include="Database\DatabaseServiceBaseTests.cs" />
+    <Compile Include="DeploymentServiceIntegrationTests.cs" />
     <Compile Include="DeploymentServiceTests.cs" />
+    <Compile Include="FileManagement\BogusIoProxy.cs" />
     <Compile Include="FileManagement\FileServiceTests.cs" />
     <Compile Include="IoC\ContainerTests.cs" />
     <Compile Include="NullAppender.cs" />

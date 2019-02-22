@@ -28,6 +28,8 @@ namespace DatabaseDeploy.Core.ScriptGeneration
 
         /// <summary>
         ///     The regex file name
+        ///     !! WARNING !! This initial value is NOT the actual regular expression used!
+        ///     The user is allowed to override it in their options, in Console's app.config, or the default value in ConfigurationService.fileNamePattern.
         /// </summary>
         private static Regex regexFileName = new Regex(@"(\d+)(\s+)?(.+)?");
 
@@ -92,7 +94,8 @@ namespace DatabaseDeploy.Core.ScriptGeneration
         }
 
         /// <summary>
-        ///     Gets the Id and description from the file name
+        ///     Gets the Id and description from the file name,
+        ///     using the regular expression specified in <see cref="FileNamePattern"/>.
         /// </summary>
         /// <exception cref="System.Exception"></exception>
         private void GetIdAndDescription()
@@ -115,7 +118,8 @@ namespace DatabaseDeploy.Core.ScriptGeneration
             this.Id = id;
             if (m.Groups.Count > 3)
             {
-                this.Description = m.Groups[3].Value;
+                int finalGroup = m.Groups.Count - 1;
+                this.Description = m.Groups[finalGroup].Value;
             }
         }
 

@@ -6,6 +6,13 @@
 //  </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Data;
+using System.IO;
+using System.Linq;
+using DatabaseDeploy.Test.Database;
+using DatabaseDeploy.Test.Utilities;
+
 namespace DatabaseDeploy.Test
 {
     using System.Collections.Generic;

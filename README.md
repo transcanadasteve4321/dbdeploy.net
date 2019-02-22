@@ -4,7 +4,18 @@
 
 This fork contains in-house customizations that were useful for a couple of active projects in the organization.
 
-### Feature: Support gaps in database script version numbers
+### Release 1.1.1
+
+#### Bug Fix: Changelog description fields should not be blank
+
+The changelog table's description field should contain a description derived from the change script name.
+If you use non-decimal change numbers (eg. 13, 14, 15), this field was incorrectly set to a single space.
+None of the unit tests caught this, so we have introduced an integration test that closely matches
+how DbDeploy runs when the different components are wired up (Developer note: see DeploymentServiceIntegrationTests).
+
+### Release 1.1.0
+
+#### Feature: Support gaps in database script version numbers
 
 On a team with many members who are either working on the same or different releases of an application,
 we found that allowing gaps in numbering was more flexible.
@@ -40,13 +51,13 @@ And add a new line to the top of that list:
 
 * 43 - (v1.0) increase penalty rate precision
 
-### Feature: Console exits with code 1 to indicate problems
+#### Feature: Console exits with code 1 to indicate problems
 
 In automated scripted deployments, if this tool encounters a problem (eg. invalid credentials accessing the database for applied changes),
 it did not exit with a different code, so the calling script thinks that everything is good and continues.
 We made the tool exit with code 1 which would signal the calling script to stop.
 
-### Feature: Censor connection strings with passwords in log entries
+#### Feature: Censor connection strings with passwords in log entries
 
 In our automated scripted deployments, a separate SQL Server database account is used to read the database's changelog and apply required changes.
 The account credentials are embedded into the connection string by the deployment system.
